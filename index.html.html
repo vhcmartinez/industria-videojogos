@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indústria dos Videojogos | Enciclopédia em Português</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Courier New', 'Georgia', serif;
+            background: #e8f0e8;
+            background-image: radial-gradient(#c8dfc8 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1a2a1a;
+            line-height: 1.6;
+        }
+
+        .encyclopedia {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffff2;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a472a, #2d5a3a);
+            color: white;
+            padding: 30px 40px;
+            border-bottom: 5px solid #ffcc44;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        .header h1 span {
+            color: #ffcc44;
+        }
+        .header p {
+            margin-top: 10px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* PLAYER DE MÚSICA ESTILO RETRO */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a472a;
+            border: 3px solid #ffcc44;
+            border-radius: 50px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            box-shadow: 5px 5px 0 #0a2a0a;
+            font-family: monospace;
+            backdrop-filter: blur(5px);
+        }
+        .music-player button {
+            background: #ffcc44;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.1s;
+        }
+        .music-player button:active {
+            transform: scale(0.95);
+        }
+        .music-player .volume-slider {
+            width: 80px;
+            cursor: pointer;
+            accent-color: #ffcc44;
+        }
+        .music-player span {
+            color: #ffcc44;
+            font-size: 0.7rem;
+        }
+        @media (max-width: 768px) {
+            .music-player { padding: 5px 10px; gap: 8px; bottom: 10px; right: 10px; }
+            .music-player button { width: 28px; height: 28px; font-size: 0.9rem; }
+            .music-player .volume-slider { width: 60px; }
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #2d5a3a;
+            gap: 2px;
+            padding: 0 20px;
+        }
+        .tab-btn {
+            background: #1a3a25;
+            border: none;
+            padding: 15px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ccddcc;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .tab-btn:hover {
+            background: #3a7a4a;
+            color: white;
+        }
+        .tab-btn.active {
+            background: #fffff2;
+            color: #1a472a;
+            border-top: 3px solid #ffcc44;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 35px 40px;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1a472a;
+            border-bottom: 3px solid #ffcc44;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        h3 {
+            color: #2d5a3a;
+            margin: 20px 0 10px 0;
+            font-size: 1.3rem;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .info-box {
+            background: #f0f7f0;
+            border-left: 5px solid #ffcc44;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .stat-card {
+            background: #1a472a;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffcc44;
+        }
+        ul, ol {
+            margin: 15px 0 15px 35px;
+        }
+        li {
+            margin: 8px 0;
+        }
+
+        .image-slot, .image-slot-small, .float-img-slot {
+            background: #e0e8e0;
+            border-radius: 15px;
+            text-align: center;
+            margin: 25px 0;
+            display: block;
+        }
+        .image-slot, .image-slot-small {
+            padding: 15px;
+        }
+        .float-img-slot {
+            float: right;
+            width: 280px;
+            margin: 0 0 20px 25px;
+            padding: 10px;
+        }
+        .float-img-slot img, 
+        .image-slot img, 
+        .image-slot-small img {
+            display: block;
+            border-radius: 12px;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9fff9;
+            margin: 20px 0;
+        }
+        .info-table td, .info-table th {
+            border: 1px solid #aacfaa;
+            padding: 12px;
+            vertical-align: top;
+        }
+        .info-table th {
+            background: #2d5a3a;
+            color: white;
+            width: 30%;
+        }
+
+        .footer {
+            background: #1a2a1a;
+            color: #aaccaa;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.8rem;
+            border-top: 3px solid #ffcc44;
+        }
+
+        @media (max-width: 768px) {
+            .tab-content { padding: 20px; }
+            .tab-btn { padding: 10px 18px; font-size: 0.8rem; }
+            .float-img-slot { float: none; width: 100%; margin: 15px 0; }
+            .header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="encyclopedia">
+    <div class="header">
+        <h1>🎮 INDÚSTRIA DOS <span>VIDEOJOGOS</span></h1>
+        <p>Tudo o que sempre quiseste saber sobre o mundo dos jogos, num só lugar</p>
+    </div>
+
+    <!-- PLAYER DE MÚSICA RETRO -->
+    <div class="music-player">
+        <button id="playPauseBtn">🔊</button>
+        <span>🎵 MÚSICA</span>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="30">
+        <span>🔊</span>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="visao">📊 VISÃO GERAL</button>
+        <button class="tab-btn" data-tab="historia">📜 HISTÓRIA</button>
+        <button class="tab-btn" data-tab="mercado">💰 MERCADO GLOBAL</button>
+        <button class="tab-btn" data-tab="plataformas">🎮 PLATAFORMAS</button>
+        <button class="tab-btn" data-tab="empresas">🏢 EMPRESAS</button>
+        <button class="tab-btn" data-tab="impacto">🌍 IMPACTO CULTURAL</button>
+        <button class="tab-btn" data-tab="futuro">🚀 FUTURO</button>
+    </div>
+
+    <!-- ABA 1: VISÃO GERAL -->
+    <div id="visao" class="tab-content active">
+        <h2>📊 Uma visão geral da indústria dos videojogos</h2>
+        
+        <div class="float-img-slot">
+            <img src="1109-adiccion-a-los-videojuegos.webp" alt="Pessoas a jogar videojogos" style="width: 100%;">
+        </div>
+        
+        <p>Sabias que a indústria dos videojogos é atualmente o setor de entretenimento que mais fatura no mundo? Pois é, ela já ultrapassou as industrias do cinema e indústria da música juntos. Em 2024, o mercado global chegou aos <strong>200 mil milhões de dólares</strong>.</p>        
+        
+        <p>Atualmente, existem mais de 3,4 mil milhões de jogadores espalhados pelo mundo — Isso representa quase metade da população global. E não são só os jovens: a idade média dos jogadores ronda os 32 anos, e 46% são mulheres. Os tempos em que se dizia que "videojogos são coisas de miúdos" já lá vão há muito.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number">3.4 Bi</div><div>Jogadores ativos</div></div>
+            <div class="stat-card"><div class="stat-number">US$ 210 Bi</div><div>Receita projetada para 2025</div></div>
+            <div class="stat-card"><div class="stat-number">+50%</div><div>Mobile domina o mercado</div></div>
+            <div class="stat-card"><div class="stat-number">32 anos</div><div>Idade média do jogador</div></div>
+        </div>
+        
+        <div class="image-slot">
+            <img src="ChatGPT Image 15_05_2026, 23_28_59.png" alt="Gráfico de vendas de videojogos por plataforma" style="width: 80%;">
+        </div>
+        
+        <div class="info-box">
+            <strong>🎯 Um facto curioso:</strong> Os videojogos deixaram de ser apenas um passatempo. Mais de 70% das famílias nos países desenvolvidos têm pelo menos um dispositivo para jogar — seja uma consola, um computador ou um simples telemóvel.
+        </div>
+        
+        <h3>Os principais segmentos do mercado</h3>
+        <ul>
+            <li><strong>Jogos Mobile (telemóvel):</strong> Representam mais da metade sendo 51% da receita global.</li>
+            <li><strong>Jogos de Consola:</strong> 28% do mercado, com PlayStation, Xbox e Nintendo na liderança.</li>
+            <li><strong>Jogos de PC:</strong> 21% do mercado, com lojas como a Steam e a Epic Games a dominar.</li>
+            <li><strong>eSports:</strong> Está a crescer a um ritmo louco, com mais de 600 milhões de espetadores.</li>
+        </ul>
+        
+        <div class="image-slot-small">
+            <img src="controles-do-jogo-de-vídeo-manche-ícones-do-vetor-do-jogo-dos-gamepads-86067149.webp" alt="Evolução dos comandos de videojogos" style="width: 60%;">
+        </div>
+    </div>
+
+    <!-- ABA 2: HISTÓRIA -->
+    <div id="historia" class="tab-content">
+        <h2>📜 A história dos videojogos — como tudo começou</h2>
+        
+        <div class="float-img-slot">
+            <img src="xQmFxCSLFhkDbYG4m6E5x3.png" alt="Pong - o primeiro grande sucesso" style="width: 100%;">
+        </div>
+        
+        <p>A história dos videojogos começa lá nos anos 50, mas foi em <strong>1972</strong> que a realmente tudo começou a crescer. A Atari lançou o <strong>Pong</strong> e tornou-se o primeiro grande sucesso comercial nas salas de arcade.</p>
+        
+        <p>Em <strong>1985</strong>, a <strong>Nintendo</strong> lançou o <strong>NES (Nintendo Entertainment System)</strong> nos Estados Unidos e salvou a indústria depois do grande crash de 1983. O Super Mario Bros. apareceu e tornou-se um fenómeno mundial. A partir daí, nada voltou a ser igual.</p>
+        
+        <div class="image-slot">
+            <img src="nintendoc-removebg-preview_Nero_AI_Image_Upscaler_Photo_Face.png" alt="Nintendo Entertainment System" style="width: 60%;">
+        </div>
+        
+        <p>Os anos 90 foram uma verdadeira guerra: <strong>16 bits</strong> (Sega Mega Drive contra Super Nintendo), o nascimento do <strong>PlayStation</strong> da Sony em 1994, e a transição para o mundo <strong>3D</strong> com jogos como Super Mario 64 e Final Fantasy VII. Que saudades, hein?</p>
+        
+        <p>Já nos anos 2000, vieram os <strong>jogos online</strong> (World of Warcraft, Counter-Strike), a chegada da <strong>Xbox</strong> da Microsoft, e a revolução dos <strong>jogos indie</strong> com títulos como Braid e, mais tarde, Minecraft (2011).</p>
+        
+        <div class="info-box">
+            <strong>⏳ Os momentos que marcaram a história:</strong><br>
+            • 1972 - Pong (o primeiro sucesso comercial)<br>
+            • 1985 - NES e Super Mario Bros<br>
+            • 1996 - Nintendo 64 e PlayStation<br>
+            • 2004 - World of Warcraft dá início à era MMO<br>
+            • 2011 - Minecraft mostra o poder dos jogos indie<br>
+            • 2020 - PS5 e Xbox Series dão início à nova geração
+        </div>
+        
+        <div class="image-slot-small">
+            <img src="ps-removebg-preview_Nero_AI_Image_Upscaler_Photo_Face.png" alt="PlayStation original de 1994" style="width: 50%;">
+        </div>
+    </div>
+
+    <!-- ABA 3: MERCADO GLOBAL -->
+    <div id="mercado" class="tab-content">
+        <h2>💰 O mercado global dos videojogos — números que impressionam</h2>
+        
+        <div class="float-img-slot">
+            <img src="Captura de ecrã 2026-05-15 231609.png" alt="Mercado global de videojogos por plataforma" style="width: 100%;">
+        </div>
+        
+        <p>O mercado dos videojogos não para de crescer. Em <strong>2024</strong>, a receita global chegou aos <strong>204 mil milhões de dólares</strong>, e as projeções apontam para <strong>250 mil milhões em 2027</strong>.</p>
+        
+        <table class="info-table">
+            <tr><th>Região</th><th>Receita anual</th><th>Crescimento 2023-24</th></tr>
+            <tr><td>Ásia-Pacífico</td><td>US$ 89 Bi</td><td>+8%</td></tr>
+            <tr><td>América do Norte</td><td>US$ 62 Bi</td><td>+5%</td></tr>
+            <tr><td>Europa</td><td>US$ 38 Bi</td><td>+6%</td></tr>
+            <tr><td>América Latina</td><td>US$ 9 Bi</td><td>+12%</td></tr>
+            <tr><td>Oriente Médio / África</td><td>US$ 6 Bi</td><td>+15%</td></tr>
+        </table>
+        
+        <div class="image-slot">
+            <img src="ChatGPT Image 15_05_2026, 11_52_57.png" alt="Receita de jogos por país" style="width: 80%;">
+        </div>
+        
+        <h3>Os 5 países que mais faturam</h3>
+        <ul>
+            <li><strong>🇺🇸 Estados Unidos:</strong> 50 mil milhões de dólares</li>
+            <li><strong>🇨🇳 China:</strong> 45 mil milhões</li>
+            <li><strong>🇯🇵 Japão:</strong> 20 mil milhões</li>
+            <li><strong>🇰🇷 Coreia do Sul:</strong> 8 mil milhões</li>
+            <li><strong>🇩🇪 Alemanha + 🇧🇷 Brasil:</strong> cerca de 6 mil milhões cada</li>
+        </ul>
+        
+        <div class="info-box">
+            <strong>📈 Sabias que...</strong> A indústria dos videojogos cresce mais rápido que o cinema e a música juntos? Em 2023, o filme mais lucrativo (Barbie) arrecadou 1,4 mil milhões de dólares — menos do que um único jogo como GTA V ou Minecraft gera num ano.
+        </div>
+        
+        <div class="image-slot-small">
+            <img src="Captura de ecrã 2026-05-15 231628.png" alt="Top 10 empresas de jogos por receita" style="width: 80%;">
+        </div>
+    </div>
+
+    <!-- ABA 4: PLATAFORMAS -->
+    <div id="plataformas" class="tab-content">
+        <h2>🎮 As plataformas onde podes jogar</h2>
+        
+        <div class="float-img-slot">
+            <img src="images (3).jfif" alt="PS5, Xbox Series X e Nintendo Switch" style="width: 100%;">
+        </div>
+        
+        <p>Hoje em dia, podes jogar em praticamente qualquer lado. A indústria está dividida em três grandes plataformas, cada uma com o seu público e o seu estilo.</p>
+        
+        <h3>📱 Telemóvel (51% do mercado)</h3>
+        <p>Os jogos para telemóvel dominam em número de jogadores — calcula-se que haja 2,8 mil milhões de utilizadores. Títulos como <strong>Candy Crush, Genshin Impact, Honor of Kings e PUBG Mobile</strong> geram milhões todos os anos, maioritariamente através de compras dentro da aplicação.</p>
+        
+        <div class="image-slot-small">
+            <img src="images (4)_Nero_AI_Image_Upscaler_Photo_Face.jpeg" alt="Jogos mobile em smartphones" style="width: 60%;">
+        </div>
+        
+        <h3>🎮 Consolas (28% do mercado)</h3>
+        <p>As consolas são a cara mais tradicional da indústria. As grandes rivais são:</p>
+        <ul>
+            <li><strong>PlayStation 5 (Sony)</strong> — mais de 50 milhões de unidades vendidas</li>
+            <li><strong>Nintendo Switch</strong> — mais de 130 milhões (um sucesso incrível)</li>
+            <li><strong>Xbox Series X/S (Microsoft)</strong> — apostam forte no Game Pass</li>
+        </ul>
+        
+        <div class="image-slot-small">
+            <img src="n-removebg-preview_Nero_AI_Image_Upscaler_Photo_Face.png" alt="Nintendo Switch" style="width: 50%;">
+        </div>
+        
+        <h3>💻 PC (21% do mercado)</h3>
+        <p>O PC continua a ter uma base de fãs leal, especialmente em géneros como estratégia, simulação, MOBA (como o League of Legends) e FPS (Counter-Strike). Plataformas como a <strong>Steam (da Valve)</strong> e a <strong>Epic Games Store</strong> mudaram a forma como compramos e jogamos.</p>
+        
+        <div class="image-slot">
+            <img src="steamXepicgames.avif" alt="Plataforma Steam" style="width: 70%;">
+        </div>
+        
+        <div class="info-box">
+            <strong>🎯 Uma tendência:</strong> A fronteira entre plataformas está a desaparecer graças ao <strong>cloud gaming</strong> (Xbox Cloud Gaming, PlayStation Plus, GeForce Now, Amazon Luna). Agora podes jogar em qualquer ecrã, sem precisar de uma consola ou de um PC caro.
+        </div>
+    </div>
+
+    <!-- ABA 5: EMPRESAS -->
+    <div id="empresas" class="tab-content">
+        <h2>🏢 As empresas gigantes por detrás dos jogos</h2>
+        
+        <div class="float-img-slot">
+            <img src="nintendo-logo-png_seeklogo-99658.png" alt="Logo da Nintendo" style="width: 80%;">
+        </div>
+        
+        <p>Por detrás dos jogos que amamos, há empresas gigantescas que movem milhões (e biliões). Vamos conhecer as principais?</p>
+        
+        <h3>🎮 Nintendo</h3>
+        <p>Fundada em 1889 no Japão — sim, 1889! — a Nintendo começou por fazer cartas de baralho. Hoje é conhecida por franquias icónicas como <strong>Mario, Zelda, Pokémon, Donkey Kong e Animal Crossing</strong>.</p>
+        
+        <div class="image-slot-small">
+            <img src="imagens/2x1_SuperMarioHub_image1600w.jpg" alt="Super Mario" style="width: 50%;">
+        </div>
+        
+        <h3>🎮 Sony Interactive Entertainment</h3>
+        <p>A Sony é a mente por detrás da <strong>PlayStation</strong>. A PS2 foi a consola mais vendida de sempre (155 milhões!). Hoje, a Sony investe forte em exclusivos de qualidade — <strong>The Last of Us, God of War, Spider-Man, Horizon</strong> — que fazem qualquer jogador querer jogar.</p>
+        
+        <h3>🎮 Microsoft Gaming (Xbox)</h3>
+        <p>A Microsoft apostou tudo no <strong>Game Pass</strong> (um serviço de subscrição com mais de 34 milhões de utilizadores) e comprou a <strong>Activision Blizzard</strong> por 69 mil milhões de dólares. Agora é dona de franquias como Call of Duty, World of Warcraft, Diablo e Candy Crush.</p>
+        
+        <div class="image-slot">
+            <img src="Xbox-Series-S-X-PlayStation-PS4-PS5-Sony-Microsoft-2024.webp" alt="Logo Xbox" style="width: 60%;">
+        </div>
+        
+        <h3>🏭 Outras editoras que deves conhecer</h3>
+        <ul>
+            <li><strong>Electronic Arts (EA)</strong> — FIFA/EA Sports FC, Battlefield, The Sims, Apex Legends</li>
+            <li><strong>Take-Two Interactive</strong> — GTA, Red Dead Redemption, NBA 2K</li>
+            <li><strong>Ubisoft</strong> — Assassin's Creed, Far Cry, Just Dance, Rainbow Six</li>
+            <li><strong>Epic Games</strong> — Fortnite, Unreal Engine, a Epic Games Store</li>
+            <li><strong>Valve</strong> — Steam, Half-Life, Counter-Strike, Dota 2, Portal</li>
+        </ul>
+        
+        <div class="image-slot-small">
+            <img src="EAcancel.jpg" alt="Logo da Electronic Arts (EA)" style="width: 50%;">
+        </div>
+    </div>
+
+    <!-- ABA 6: IMPACTO CULTURAL -->
+    <div id="impacto" class="tab-content">
+        <h2>🌍 O impacto cultural dos videojogos — são mais do que brinquedos</h2>
+        
+        <div class="float-img-slot">
+            <img src="T1_vs_BLG_2024_Worlds_Finals.jpg" alt="Público num torneio de eSports" style="width: 100%;">
+        </div>
+        
+        <p>Os videojogos já não são só brinquedos para crianças. Hoje são reconhecidos como <strong>arte, ferramenta educativa, espaço de socialização e até desporto</strong>. Museus como o <strong>MOMA (Nova Iorque)</strong> e o <strong>Smithsonian Institution</strong> já incluíram videojogos nas suas coleções permanentes.</p>
+        
+        <h3>🎨 Videojogos como arte</h3>
+        <p>Jogos como <strong>Journey, Gris, The Legend of Zelda: Breath of the Wild</strong> e <strong>Shadow of the Colossus</strong> são frequentemente citados como exemplos de arte interativa. A música, a narrativa, o design visual — tudo contribui para experiências inesquecíveis.</p>
+        
+        <div class="image-slot">
+            <img src="Elden-Ring-Cover-Art.avif" alt="Elden Ring - exemplo de arte nos videojogos" style="width: 40%;">
+        </div>
+        
+        <h3>🏆 eSports e eventos de grande escala</h3>
+        <p>As competições profissionais, como o <strong>League of Legends World Championship</strong> ou <strong>The International (Dota 2)</strong>, atraem audiências de mais de 100 milhões de pessoas. Os prémios monetários chegam a ultrapassar os <strong>40 milhões de dólares</strong> num único torneio.</p>
+        
+        <div class="image-slot-small">
+            <img src="T1_vs_BLG_2024_Worlds_Finals.jpg" alt="Final do World Championship" style="width: 80%;">
+        </div>
+        
+        <h3>🧠 Benefícios cognitivos e educação</h3>
+        <p>Vários estudos mostram que os videojogos podem melhorar a <strong>capacidade de resolução de problemas, a coordenação motora e a memória de trabalho</strong>. Alguns jogos são até usados em terapias de reabilitação ou para tratar ansiedade.</p>
+        
+        <div class="info-box">
+            <strong>🎥 Videojogos no cinema e na TV:</strong> O sucesso de The Last of Us (HBO), Arcane (League of Legends), o filme do Super Mario (bilionário!) e Cyberpunk: Edgerunners mostra que os videojogos são uma fonte inesgotável de boas histórias para outras industrias.
+        </div>
+        
+        <div class="image-slot-small">
+            <img src="the-last-of-us_1_165413-1024x576.webp" alt="The Last of Us - adaptação para TV" style="width: 80%;">
+        </div>
+    </div>
+
+    <!-- ABA 7: FUTURO -->
+    <div id="futuro" class="tab-content">
+        <h2>🚀 O futuro da indústria</h2>
+        
+        <div class="float-img-slot">
+            <img src="maxresdefault.webp" alt="PlayStation VR2 - realidade virtual" style="width: 100%;">
+        </div>
+        
+        <h3>🕶️ Realidade Virtual e Aumentada</h3>
+        <p>A VR ainda é um nicho, mas está a evoluir rápido. Headsets como o <strong>Meta Quest, o PlayStation VR2 e o Apple Vision Pro</strong> estão a tornar a experiência cada vez mais imersiva. Jogos como Half-Life: Alyx já mostram o que é possível.</p>
+        
+        <div class="image-slot">
+            <img src="vision_pro_lentes00.jpg" alt="Apple Vision Pro" style="width: 60%;">
+        </div>
+        
+        <h3>☁️ Cloud Gaming (jogar na nuvem)</h3>
+        <p>Serviços como <strong>Xbox Cloud Gaming, NVIDIA GeForce Now e PlayStation Plus Premium</strong> permitem jogar em qualquer ecrã, sem precisar de uma consola ou de um PC potente.</p>
+        
+        <h3>🤖 Inteligência Artificial</h3>
+        <p>A IA generativa (ChatGPT, Midjourney, etc.) está a mudar a forma como os jogos são criados. Mundos processuais, diálogos dinâmicos, NPCs mais inteligentes, arte gerada automaticamente... Isto vai ajudar os pequenos estúdios (indie) a fazer grandes coisas.</p>
+        
+        <div class="image-slot-small">
+            <img src="Inteligencia-artificial-e-consultoria-1200x675.jpg" alt="Inteligência Artificial" style="width: 70%;">
+        </div>
+        
+        <h3>🎮 Metaverso e mundos persistentes</h3>
+        <p>Empresas como a Epic Games (Fortnite) e a Microsoft (Minecraft) estão a investir em <strong>plataformas sociais virtuais</strong> — Lugar onde jogos, concertos, marcas e eventos coexistem. O futuro é social e imersivo.</p>
+        
+        <div class="info-box">
+            <strong>📊 O que esperar até 2030?</strong><br>
+            • Mercado global: entre 350 e 400 mil milhões de dólares<br>
+            • Nuvem e subscrições: 30% do mercado<br>
+            • Maior crescimento: Médio Oriente, África e América Latina<br>
+            • Jogadoras: quase 50% do público
+        </div>
+        
+        <div class="image-slot">
+            <img src="0x0.webp" alt="Concerto virtual no Fortnite - metaverso" style="width: 80%;">
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>📚 Enciclopédia da Indústria dos Videojogos — feita com 💚 para todos os jogadores de Portugal</p>
+        <p>🎮 Dados atualizados com base em relatórios da Newzoo, Statista, ESA e das próprias empresas (2024-2025)</p>
+        <p>📸 Imagens provenientes da Wikimedia Commons, domínio público ou licenças Creative Commons</p>
+        <p>✨ Se há algo que possamos melhorar ou acrescentar, é só dizer. Estamos aqui para isso!</p>
+    </div>
+</div>
+
+<script>
+    // SISTEMA DE TABS
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function openTab(tabId) {
+        tabContents.forEach(content => content.classList.remove('active'));
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) activeContent.classList.add('active');
+        
+        const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            openTab(tabId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // ============================================
+    // PLAYER DE MÚSICA - COMPLETO E FUNCIONAL
+    // ============================================
+    // ALTERA O NOME DO FICHEIRO ABAIXO PARA O TEU
+    // O ficheiro tem de estar na mesma pasta que este HTML
+    
+    const musicUrl = "YTDown_YouTube_Terraria-Music-Day_Media_x23I8f9PwlI_009_128k.mp3";  
+    
+    let audio = null;
+    let isPlaying = false;
+    
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    
+    function initAudio() {
+        if (!audio) {
+            audio = new Audio(musicUrl);
+            audio.loop = true;
+            audio.volume = volumeSlider.value / 100;
+            
+            audio.addEventListener('canplaythrough', () => {
+                console.log('✅ Música carregada com sucesso!');
+            });
+            
+            audio.addEventListener('error', (e) => {
+                console.error('❌ Erro ao carregar música. Verifica se o ficheiro existe: ' + musicUrl);
+                playPauseBtn.innerHTML = '⚠️';
+                setTimeout(() => {
+                    if (!isPlaying) playPauseBtn.innerHTML = '🔊';
+                }, 2000);
+            });
+        }
+    }
+    
+    function toggleMusic() {
+        initAudio();
+        
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            playPauseBtn.innerHTML = '🔊';
+        } else {
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
+                    playPauseBtn.innerHTML = '⏸️';
+                }).catch(error => {
+                    console.log('⚠️ Reprodução automática bloqueada. Clique no player para começar.');
+                    alert('🔊 Clique no botão do player para tocar a música (o browser bloqueia reprodução automática).');
+                });
+            }
+        }
+    }
+    
+    function changeVolume() {
+        if (audio) {
+            audio.volume = volumeSlider.value / 100;
+        }
+    }
+    
+    playPauseBtn.addEventListener('click', toggleMusic);
+    volumeSlider.addEventListener('input', changeVolume);
+    
+    console.log('🎮 Site carregado! Player de música pronto. 🔊');
+</script>
+</body>
+</html>
